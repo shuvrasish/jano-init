@@ -1,0 +1,116 @@
+.buttonFalse {
+  background: #fcd303;
+  height: 30vh;
+  overflow: hidden;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.tinderCards_cardContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 0vh;
+}
+.card {
+  width: 450px;
+  padding: 5px;
+  max-width: 95vw;
+  background-position: center;
+  position: fixed;
+  height: 70vh;
+  border-radius: 20px;
+  background-size: cover;
+  background-color: #000000;
+  overflow:hidden;
+}
+
+.swipe {
+  position: relative;
+}
+
+.post-content {
+  background-color: #000000;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+.post-module {
+  background-color: #000000;
+}
+.title {
+  padding-left: 10px;
+  padding-right: 5px;
+  padding-top: 2px;
+  font-size: 3vh;
+  font-family: sans-serif;
+  color: white;
+}
+.sub_title {
+  margin-left: 10px;
+  margin-right: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 1.8vh;
+  font-family: sans-serif;
+  color: #666666;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.sub_title p {
+  animation: scroll-left 15s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    -moz-transform: translateX(100%); /* Browser bug fix */
+    -webkit-transform: translateX(100%); /* Browser bug fix */
+    transform: translateX(100%);
+  }
+  100% {
+    -moz-transform: translateX(-100%); /* Browser bug fix */
+    -webkit-transform: translateX(-100%); /* Browser bug fix */
+    transform: translateX(-100%);
+  }
+}
+
+hr.solid {
+  width: 50%;
+  margin-left: 10px;
+  background-color: #fcd303;
+}
+
+.descriptionn {
+  padding-left: 10px;
+  padding-right: 5px;
+  padding-top: 8px;
+  font-size: 2.2vh;
+  font-family: sans-serif;
+  color: #bbb;
+  height: 22vh;
+  overflow: scroll;
+}
+.category {
+  padding-left: 10px;
+  padding-right: 5px;
+  padding-top: 5px;
+  font-size: 1.7vh;
+  font-family: sans-serif;
+  color: #bbb;
+  white-space: pre-line;
+}
+.cardanalytics {
+  display:block;
+  padding-left: 10px;
+  padding-right: 5px;
+  padding-bottom: 1px;
+  font-size: 18px;
+  font-family: sans-serif;
+  color: #bbb;
+  white-space: pre-line;
+}
+.highlight{
+  background-color: #5061fb;
+  color: #ffffff;
+  
+}

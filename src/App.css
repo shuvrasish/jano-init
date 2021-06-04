@@ -1,0 +1,10 @@
+#root {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  max-width: 100vw;
+  height: 90vh;
+  overflow: hidden;
+  /* background: linear-gradient(#fff, #999); */
+  box-sizing: border-box; 
+}
