@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import "./App.css";
 import Cards from "./Cards";
 import "firebase/analytics";
-import database from "./firebase";
-import firebase from "firebase/app";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import { IconButton } from "@material-ui/core";
+import NotificationDialog from "./NotificationDialog";
 
 function App() {
-  console.log(Notification.permission);
+  const [open, setOpen] = useState(false);
   const [notifPermission, setNotifPermission] = useState(
     Notification.permission
   );
@@ -59,64 +58,29 @@ function App() {
   //   // const msg = firebase.messaging()
   // });
 
+  //handler for notification permission dialox box
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   //handler for allowing notifications.
   //once notifications are allowed or blocked, the option can only be changed from the browser settings and the popup wont appear unless ask option is currently selected in the browser settings
-  const messagingNotificationHandler = () => {
-    let messaging = null;
-    if (firebase.messaging.isSupported()) {
-      messaging = firebase.messaging();
-      //using "messaging" shows warning so replaced it with "Notification" which does the same thing
-      Notification.requestPermission()
-        .then((permission) => {
-          console.log(`Permission ${permission}`);
-          setNotifPermission(permission);
-          return messaging.getToken({
-            vapidKey:
-              "BNr6t72DsL2tuv-9_pcEhQqgQv-A1Irqpaohv5k48vC2Wg-Hf58bORmBK6g8adqT4hHOTC7IXaVr_Yjl1Vkh9Oc",
-          });
-        })
-        .then((data) => {
-          console.log(data);
-          if (firebase.auth().currentUser == null) {
-            database
-              .collection("TokenWithoutLogin")
-              .doc("TokenWithoutLogin")
-              .update({
-                token: firebase.firestore.FieldValue.arrayUnion(data),
-              });
-          } else {
-            database
-              .collection("Users")
-              .doc(firebase.auth().currentUser.email)
-              .update({
-                token: data,
-              });
-            database
-              .collection("TokenWithoutLogin")
-              .doc("TokenWithoutLogin")
-              .update({
-                token: firebase.firestore.FieldValue.arrayRemove(data),
-              });
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } else {
-      console.log("Firebase Messaging not supported!");
-    }
-  };
 
   return (
     <div className="App">
       <div className="notif-container">
         {notifPermission === "default" ? (
-          <IconButton onClick={messagingNotificationHandler}>
+          <IconButton onClick={handleOpen}>
             <NotificationsActiveIcon fontSize="large" />
           </IconButton>
         ) : (
           ""
         )}
+        <NotificationDialog
+          open={open}
+          setOpen={setOpen}
+          setNotifPermission={setNotifPermission}
+        />
       </div>
       <Router>
         <Switch>
