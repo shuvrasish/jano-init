@@ -5,19 +5,28 @@ import {
   DialogContent,
   DialogTitle,
   Typography,
+  IconButton,
 } from "@material-ui/core";
+import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import database from "./firebase";
 import firebase from "firebase/app";
-import React from "react";
+import React, { useState } from "react";
 
-export default function NotificationDialog({
-  open,
-  setOpen,
-  setNotifPermission,
-}) {
+const NotificationDialog = () => {
+  const [open, setOpen] = useState(false);
+  const [notifPermission, setNotifPermission] = useState(
+    Notification.permission
+  );
   const handleClose = () => {
     setOpen(false);
   };
+  //handler for notification permission dialox box
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  //handler for allowing notifications.
+  //once notifications are allowed or blocked, the option can only be changed from the browser settings and the popup wont appear unless ask option is currently selected in the browser settings
   const messagingNotificationHandler = () => {
     let messaging = null;
     if (firebase.messaging.isSupported()) {
@@ -65,32 +74,43 @@ export default function NotificationDialog({
     setOpen(false);
   };
   return (
-    <Dialog
-      onClose={handleClose}
-      aria-labelledby="customized-dialog-title"
-      open={open}
-    >
-      <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Ask for Notification Permissions?
-      </DialogTitle>
-      <DialogContent dividers>
-        <Typography variant="body1" gutterBottom>
-          Note: Changes will be permanent unless you change it from the browser
-          site settings.
-        </Typography>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          autoFocus
-          onClick={messagingNotificationHandler}
-          color="primary"
-        >
-          <Typography variant="button">Yes</Typography>
-        </Button>
-        <Button variant="button" onClick={handleClose} color="primary">
-          No
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <div className="notif-container">
+      {notifPermission === "default" ? (
+        <IconButton onClick={handleOpen}>
+          <NotificationsActiveIcon fontSize="large" />
+        </IconButton>
+      ) : (
+        ""
+      )}
+      <Dialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
+        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+          Ask for Notification Permissions?
+        </DialogTitle>
+        <DialogContent dividers>
+          <Typography variant="body1" gutterBottom>
+            Note: Changes will be permanent unless you change it from the
+            browser site settings.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            autoFocus
+            onClick={messagingNotificationHandler}
+            color="primary"
+          >
+            <Typography variant="button">Yes</Typography>
+          </Button>
+          <Button variant="button" onClick={handleClose} color="primary">
+            No
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
-}
+};
+
+export default NotificationDialog;
